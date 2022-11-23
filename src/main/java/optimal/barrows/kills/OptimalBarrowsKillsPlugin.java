@@ -105,7 +105,7 @@ public class OptimalBarrowsKillsPlugin extends Plugin
 	boolean isInCrypt()
 	{
 		Player localPlayer = client.getLocalPlayer();
-		return localPlayer != null && localPlayer.getWorldLocation().getRegionID() == CRYPT_REGION_ID;
+		return localPlayer.getWorldLocation().getRegionID() == CRYPT_REGION_ID;
 	}
 
 	BarrowsBrother getNextUnkilledBrother() {
