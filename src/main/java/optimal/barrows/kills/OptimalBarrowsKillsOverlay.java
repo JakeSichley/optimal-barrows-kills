@@ -7,17 +7,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import net.runelite.api.Client;
-import net.runelite.api.Player;
-import net.runelite.api.Varbits;
-import net.runelite.api.WorldType;
 import net.runelite.client.ui.overlay.Overlay;
 import net.runelite.client.ui.overlay.OverlayPosition;
 import net.runelite.client.ui.overlay.components.PanelComponent;
 import net.runelite.client.ui.overlay.components.TitleComponent;
 import net.runelite.client.ui.overlay.components.LineComponent;
+import net.runelite.client.ui.overlay.components.TextComponent;
 import lombok.extern.slf4j.Slf4j;
 
-import static net.runelite.api.Varbits.BARROWS_NPCS_SLAIN;
 import static net.runelite.api.Varbits.BARROWS_REWARD_POTENTIAL;
 
 @Slf4j
@@ -41,9 +38,11 @@ class OptimalBarrowsKillsOverlay extends Overlay
     public Dimension render(Graphics2D graphics)
     {
         // if not in crypt or haven't killed all brothers
-        if (!plugin.isInCrypt() || !plugin.allBrothersKilled()) { return null; }
+        if (!plugin.isInCrypt() || plugin.numBrothersKilled() < 5) { return null; }
 
         List<String> content = getDisplayLists();
+
+        // center if content.len == 1
 
         int remainingPotential = plugin.OPTIMAL_COMBAT_SUM - client.getVarbitValue(BARROWS_REWARD_POTENTIAL);
         String overlayTitle = String.format("Optimal Barrows (%d Remaining)", remainingPotential);
@@ -65,6 +64,7 @@ class OptimalBarrowsKillsOverlay extends Overlay
         // render the infobox's content
         for (String contentLine : content) {
             panelComponent.getChildren().add(LineComponent.builder()
+
                     .left(contentLine)
                     .build());
         }
@@ -73,7 +73,12 @@ class OptimalBarrowsKillsOverlay extends Overlay
     }
 
     private List<String> getDisplayLists() {
-        int remainingPotential = plugin.OPTIMAL_COMBAT_SUM - client.getVarbitValue(BARROWS_REWARD_POTENTIAL);
+        BarrowsBrother remainingBrother = plugin.getNextUnkilledBrother();
+        int remainingBrotherCombatLevel = remainingBrother != null ? remainingBrother.getCombatLevel() : 0;
+
+        int remainingPotential = plugin.OPTIMAL_COMBAT_SUM
+                - client.getVarbitValue(BARROWS_REWARD_POTENTIAL)
+                - remainingBrotherCombatLevel;
 
         // case 1: optimal kills achieved
         if (remainingPotential < plugin.LOWEST_COMBAT_LEVEL) {

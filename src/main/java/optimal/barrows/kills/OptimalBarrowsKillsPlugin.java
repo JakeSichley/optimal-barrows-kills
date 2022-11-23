@@ -104,18 +104,28 @@ public class OptimalBarrowsKillsPlugin extends Plugin
 		return viableLists;
 	}
 
-	boolean allBrothersKilled() {
-		return (client.getVarbitValue(Varbits.BARROWS_KILLED_AHRIM) == 1)
-				&& (client.getVarbitValue(Varbits.BARROWS_KILLED_DHAROK) == 1)
-				&& (client.getVarbitValue(Varbits.BARROWS_KILLED_GUTHAN) == 1)
-				&& (client.getVarbitValue(Varbits.BARROWS_KILLED_KARIL) == 1)
-				&& (client.getVarbitValue(Varbits.BARROWS_KILLED_TORAG) == 1)
-				&& (client.getVarbitValue(Varbits.BARROWS_KILLED_VERAC) == 1);
+	int numBrothersKilled() {
+		return client.getVarbitValue(Varbits.BARROWS_KILLED_AHRIM) +
+			client.getVarbitValue(Varbits.BARROWS_KILLED_DHAROK) +
+			client.getVarbitValue(Varbits.BARROWS_KILLED_GUTHAN) +
+			client.getVarbitValue(Varbits.BARROWS_KILLED_KARIL) +
+			client.getVarbitValue(Varbits.BARROWS_KILLED_TORAG) +
+			client.getVarbitValue(Varbits.BARROWS_KILLED_VERAC);
 	}
 
 	boolean isInCrypt()
 	{
 		Player localPlayer = client.getLocalPlayer();
 		return localPlayer != null && localPlayer.getWorldLocation().getRegionID() == CRYPT_REGION_ID;
+	}
+
+	BarrowsBrother getNextUnkilledBrother() {
+		for (BarrowsBrother brother : BarrowsBrother.values()) {
+			if (client.getVarbitValue(brother.getKilledVarbit()) == 1) {
+				return brother;
+			}
+		}
+
+		return null;
 	}
 }
