@@ -1,13 +1,13 @@
-package com.example;
+package optimal.barrows.kills;
 
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;
 
-public class ExamplePluginTest
+public class OptimalBarrowsKillsTest
 {
 	public static void main(String[] args) throws Exception
 	{
-		ExternalPluginManager.loadBuiltin(ExamplePlugin.class);
+		ExternalPluginManager.loadBuiltin(OptimalBarrowsKillsPlugin.class);
 		RuneLite.main(args);
 	}
 }

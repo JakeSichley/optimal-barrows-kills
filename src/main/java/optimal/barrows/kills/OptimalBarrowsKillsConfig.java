@@ -1,11 +1,11 @@
-package com.example;
+package optimal.barrows.kills;
 
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 
-@ConfigGroup("example")
-public interface ExampleConfig extends Config
+@ConfigGroup("optimalbarrowskills")
+public interface OptimalBarrowsKillsConfig extends Config
 {
 	@ConfigItem(
 		keyName = "greeting",
