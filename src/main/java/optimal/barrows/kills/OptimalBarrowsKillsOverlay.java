@@ -67,8 +67,7 @@ class OptimalBarrowsKillsOverlay extends Overlay
     }
 
     private List<String> getDisplayLists() {
-        BarrowsBrother remainingBrother = plugin.getNextUnkilledBrother();
-        int remainingBrotherCombatLevel = remainingBrother != null ? remainingBrother.getCombatLevel() : 0;
+        int remainingBrotherCombatLevel = getLastBrotherCombatLevel();
 
         int remainingPotential = plugin.OPTIMAL_COMBAT_SUM
                 - client.getVarbitValue(BARROWS_REWARD_POTENTIAL)
@@ -105,5 +104,17 @@ class OptimalBarrowsKillsOverlay extends Overlay
         }
 
         return Integer.max(titleLength, longestContentLine);
+    }
+
+    private int getLastBrotherCombatLevel() {
+        // returns the combat level of the last remaining barrows brother
+        // used for remaining potential calculations
+
+        if (plugin.numBrothersKilled() != 5) {
+            return 0;
+        }
+
+        BarrowsBrother remainingBrother = plugin.getNextUnkilledBrother();
+        return remainingBrother != null ? remainingBrother.getCombatLevel() : 0;
     }
 }
