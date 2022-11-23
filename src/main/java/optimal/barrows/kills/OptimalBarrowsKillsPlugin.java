@@ -1,11 +1,9 @@
 package optimal.barrows.kills;
 
-import com.google.inject.Provides;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.events.VarbitChanged;
-import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -28,9 +26,6 @@ public class OptimalBarrowsKillsPlugin extends Plugin
 	private OverlayManager overlayManager;
 
 	@Inject
-	private OptimalBarrowsKillsConfig config;
-
-	@Inject
 	private OptimalBarrowsKillsOverlay overlay;
 
 	private static final int CRYPT_REGION_ID = 14231;
@@ -49,12 +44,6 @@ public class OptimalBarrowsKillsPlugin extends Plugin
 			{ BarrowsNPC.BLOODWORM, BarrowsNPC.BLOODWORM, BarrowsNPC.BLOODWORM, BarrowsNPC.CRYPT_SPIDER },
 			{ BarrowsNPC.BLOODWORM, BarrowsNPC.BLOODWORM, BarrowsNPC.BLOODWORM, BarrowsNPC.BLOODWORM }
 	};
-
-	@Provides
-	OptimalBarrowsKillsConfig provideConfig(ConfigManager configManager)
-	{
-		return configManager.getConfig(OptimalBarrowsKillsConfig.class);
-	}
 
 	@Override
 	protected void startUp() throws Exception

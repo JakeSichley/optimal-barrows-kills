@@ -33,10 +33,6 @@ public enum BarrowsNPC {
         return this.name;
     }
 
-    public int getCombatLevel() {
-        return this.combatLevel;
-    }
-
     public static List<BarrowsNPC> removeSublist(List<BarrowsNPC> superList, List<BarrowsNPC> sublist) {
         List<String> superListNames = superList.stream().map(BarrowsNPC::getName).collect(Collectors.toList());
         List<String> subListNames = sublist.stream().map(BarrowsNPC::getName).collect(Collectors.toList());
@@ -62,10 +58,6 @@ enum BarrowsBrother
     private final String name;
     private final int combatLevel;
     private final int killedVarbit;
-
-    public String getName() {
-        return this.name;
-    }
 
     public int getCombatLevel() {
         return this.combatLevel;

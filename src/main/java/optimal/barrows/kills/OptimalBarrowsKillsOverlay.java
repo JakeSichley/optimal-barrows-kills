@@ -12,7 +12,6 @@ import net.runelite.client.ui.overlay.OverlayPosition;
 import net.runelite.client.ui.overlay.components.PanelComponent;
 import net.runelite.client.ui.overlay.components.TitleComponent;
 import net.runelite.client.ui.overlay.components.LineComponent;
-import net.runelite.client.ui.overlay.components.TextComponent;
 import lombok.extern.slf4j.Slf4j;
 
 import static net.runelite.api.Varbits.BARROWS_REWARD_POTENTIAL;
@@ -21,16 +20,14 @@ import static net.runelite.api.Varbits.BARROWS_REWARD_POTENTIAL;
 class OptimalBarrowsKillsOverlay extends Overlay
 {
     private final Client client;
-    private final OptimalBarrowsKillsConfig config;
     private final OptimalBarrowsKillsPlugin plugin;
     private final PanelComponent panelComponent = new PanelComponent();
 
     @Inject
-    private OptimalBarrowsKillsOverlay(Client client, OptimalBarrowsKillsConfig config, OptimalBarrowsKillsPlugin plugin)
+    private OptimalBarrowsKillsOverlay(Client client, OptimalBarrowsKillsPlugin plugin)
     {
         setPosition(OverlayPosition.ABOVE_CHATBOX_RIGHT);
         this.client = client;
-        this.config = config;
         this.plugin = plugin;
     }
 
@@ -41,8 +38,6 @@ class OptimalBarrowsKillsOverlay extends Overlay
         if (!plugin.isInCrypt() || plugin.numBrothersKilled() < 5) { return null; }
 
         List<String> content = getDisplayLists();
-
-        // center if content.len == 1
 
         int remainingPotential = plugin.OPTIMAL_COMBAT_SUM - client.getVarbitValue(BARROWS_REWARD_POTENTIAL);
         String overlayTitle = String.format("Optimal Barrows (%d Remaining)", remainingPotential);
@@ -64,7 +59,6 @@ class OptimalBarrowsKillsOverlay extends Overlay
         // render the infobox's content
         for (String contentLine : content) {
             panelComponent.getChildren().add(LineComponent.builder()
-
                     .left(contentLine)
                     .build());
         }
